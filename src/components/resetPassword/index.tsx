@@ -20,11 +20,11 @@ const RenderPasswordreset = () => {
     <AuthContainer
         title="Redefina sua senha"
         subtitle="Insira seu e-mail para a redefinição de senha"
-        icon="hotel">
+        icon="">
 
         <TextField
             label=""
-            icon="email"
+            icon={{ lib: "MaterialIcons", name: "email" }}
             placeholder="user@email.com"
             keyboardType="email-address"
         />

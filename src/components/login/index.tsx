@@ -4,6 +4,7 @@ import PasswordField from "../ui/PasswordField";
 import TextField from "../ui/TextField";
 import { global } from "../ui/styles";
 import { useRouter } from "expo-router";
+
 const RenderLogin = () => {
     const router = useRouter();
 
@@ -18,20 +19,24 @@ const RenderLogin = () => {
             {/* children */}    
             <TextField
                 label="E-mail"
-                icon="email"
+                icon={{ lib: "MaterialIcons", name: "email" }}
                 placeholder="user@email.com"
                 keyboardType="email-address"
             />
 
             <PasswordField
                 label="Senha"
-                icon="lock"
+                icon={{ lib: "MaterialIcons", name: "lock" }}
                 placeholder="*********"
             />
 
-        <TouchableOpacity style={[global.primaryButton]}>
+        <TouchableOpacity
+          style={[global.primaryButton]}
+          onPress={() => router.push("/(tabs)/explorer")}
+        >
             <Text style={global.primaryButtonText}>Entrar</Text>
         </TouchableOpacity>
+
         <View style={{alignItems: "center", marginTop: height * 0.03}}>
             <TouchableOpacity onPress={() => router.push("/(auth)/resetPassword")}>
                 <Text style={{color: "#0a4b70ff", fontSize: 17, fontWeight: 600}}>Esqueci minha senha</Text>

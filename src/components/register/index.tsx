@@ -17,38 +17,32 @@ const RenderRegister = () => {
 
             <TextField
                 label="Nome completo"
-                icon="person"
                 placeholder="Digite seu nome completo"
             />
 
             <TextField
                 label="CPF"
-                icon="badge"
                 placeholder="Digite seu CPF"
             />
             
             <TextField
                 label="Telefone"
-                icon="phone"
                 placeholder="Digite seu telefone com DDD!"
             />  
 
             <TextField
                 label="E-mail"
-                icon="email"
                 placeholder="user@email.com"
                 keyboardType="email-address"
             />
 
             <PasswordField
                 label="Senha"
-                icon="lock"
                 placeholder="*********"
             />
 
             <PasswordField
                 label="Confirme sua senha"
-                icon="lock"
                 placeholder="*********"
             />
 

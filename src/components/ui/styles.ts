@@ -19,15 +19,14 @@ export const global = StyleSheet.create({
     title: {
         fontSize: 25,
         fontWeight: "800",
-        /*Para atribuir cor: color:*/
     },
     subtitle: {
         fontSize: 17,
-        color: "blue",
+        color: "black",
         marginTop: height * 0.01
     },
     content: {
-        backgroundColor: "#ffffffff",
+        backgroundColor: "#f3eef8ff",
         borderRadius: 10,
         padding: width * 0.02,
         shadowColor: "#000",
@@ -35,14 +34,14 @@ export const global = StyleSheet.create({
         shadowRadius: 10,
         elevation: 2
     },
-    //Inputs
+    
     inputGroup: {
         marginBottom: height * 0.02,
     },
     label: {
         fontSize: 17,
         fontWeight: "600",
-        color: "#070707ff",
+        color: "#120715ff",
         marginBottom: height * 0.01
     },
     inputIcon: {
@@ -51,14 +50,14 @@ export const global = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         borderWidth: 2,
-        borderColor: "#e4e3e3ff",
+        borderColor: "#ffffffff",
         borderRadius: 10
     },
     input: {
         flex: 1,
         fontSize: 17,
-        color: "#000000ff",
-        paddingHorizontal: width * 0.02
+        color: "#000",
+        paddingHorizontal: width * 0.01
     },
     eyeIcon: {
         position: "absolute",
@@ -76,18 +75,19 @@ export const global = StyleSheet.create({
         marginTop: height * 0.01   
     },
     primaryButton: {
-        backgroundColor: "#0a4b70ff",
+        backgroundColor: "#0f6891ff",
         borderRadius: 10,
         padding: width * 0.025,
         marginTop: width * 0.02,
         alignItems: "center"
     },
     primaryButtonDisabled: {
-        backgroundColor: "#9ca3af",
+        backgroundColor: "#0e4096ff",
         borderRadius: 10,
     },
     primaryButtonText: {
-        color: "#fff"
+        color: "#fff",
+        fontSize: 17,
+        fontWeight: 600
     }
-    
 })  

@@ -1,58 +1,38 @@
-import { useState } from "react";
-import { TouchableOpacity, View, Text, Modal } from "react-native";
-import { picker } from "@/components/ui/picker";
-import DatePicker, { getFormatedDate } from "react-native-modern-datepicker";
+import {Dimensions, View} from "react-native"
+import DatePicker, { getToday } from "react-native-modern-datepicker"
 
-const RenderDatePicker = () => {
-  const [open, setOpen] = useState(false);
-  const [date, setDate] = useState("18/11/2025");
+type Props = {
+  onSelectDate: (date: string) => void
+};
 
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
-
-  const startDate = getFormatedDate(tomorrow, "YYYY/MM/DD");
-
-  function handleOnPress() {
-    setOpen(!open);
-  }
-
-  function handleChange(selectedDate: string) {
-    setDate(selectedDate);
-  }
-
+const DateSelector = ({onSelectDate}: Props) => {
+  const { width, height} = Dimensions.get("window");
+  const today = getToday();
+  
   return (
     <View>
-      <TouchableOpacity onPress={handleOnPress}>
-        <Text>Open</Text>
-      </TouchableOpacity>
+      <DatePicker
+      mode="calendar"
+      options={{
+        backgroundColor: "white",
+        textHeaderColor: "black",
+        textDefaultColor: "black",
+        selectedTextColor: "#534e4eff",
+        mainColor: "blue",
+        textSecondaryColor: "#574d4dff",
+        borderColor: "blue",
+        textFontSize: 14,
+        textHeaderFontSize: 15,
+      }}
+      style={{ borderRadius: 15, width: width * 0.65, height: "auto", position: "absolute", zIndex: 1 }}
+      isGregorian={true}
+      minimumDate={today}
+      onSelectedChange={(date) => {
+        onSelectDate(date); 
+      }}
+      />
 
-      <Modal animationType="slide" transparent={true} visible={open}>
-        <View style={picker.centerView}>
-          <View style={picker.modalView}>
-            <DatePicker
-              mode="calendar"
-              selected={date}
-              minimumDate={startDate}
-              onSelectedChange={handleChange}
-              isGregorian={true}   
-                options={{
-                    mainColor: "#1976D2",
-                    textHeaderColor: "#1976D2",
-                    textDefaultColor: "#000000",
-                    selectedTextColor: "#FFFFFF",
-                    borderColor: "#1976D2",
-                }}
-            />
-
-            <TouchableOpacity onPress={handleOnPress}>
-              <Text>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 };
-
-export default RenderDatePicker;
+export default DateSelector;

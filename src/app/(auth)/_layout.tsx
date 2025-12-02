@@ -4,16 +4,16 @@ push(): empilha a tela atual sobre a anterior
 back(): remove a tela atual e retorna à tela anterior empilhada
 replace(): subtitui a tela atual pela próxima */
 
-// import { Stack } from "expo-router";
+import { Stack } from "expo-router";
 
-// const AuthLayout = () => {
-//     return (
-//         <Stack screenOptions={{headerShown: false}}>
-//             <Stack.Screen name="login" options={{ title: "Login" }}/>
-//         { <Stack.Screen name="register" options={{ title: "Register" }}/>}
-//         {<Stack.Screen name="resetPassword" options={{ title: "Esqueci minha senha" }}/>}
-//         </Stack>
-//     )
-// }
+const AuthLayout = () => {
+    return (
+        <Stack screenOptions={{headerShown: false}}>
+            <Stack.Screen name="login" options={{ title: "Login" }}/>
+        { <Stack.Screen name="register" options={{ title: "Register" }}/>}
+        {<Stack.Screen name="resetPassword" options={{ title: "Esqueci minha senha" }}/>}
+        </Stack>
+    )
+}
 
-// export default AuthLayout;
+export default AuthLayout;
