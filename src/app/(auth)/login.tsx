@@ -1,6 +1,6 @@
-import RenderLogin from "@/components/login";
+import RenderLogin from "@/components/login/index";
 
-/* Login */
+
 const Login = () => {
     return (
         <RenderLogin />

@@ -1,5 +1,5 @@
 import { FontAwesome5, FontAwesome6, MaterialIcons } from "@expo/vector-icons";
-import { Dimensions, Image, ImageSourcePropType, Text, View } from "react-native";
+import { Dimensions, Image, ImageSourcePropType, Text, TouchableOpacity, View } from "react-native";
 import { RoomStyle } from "./RoomStyle";
 
 type NameIcon =
@@ -14,9 +14,10 @@ type Props = {
   label?: string;
   description?: Infos;
   icon?: NameIcon;
+  onReserve?: () => void;
 };
 
-const RoomCard = ({ image, label, description, icon }: Props) => {
+const RoomCard = ({ image, label, description, icon, onReserve}: Props) => {
   return (
     <View style={RoomStyle.container}>
       {!!image &&
@@ -51,6 +52,23 @@ const RoomCard = ({ image, label, description, icon }: Props) => {
           <Text style={RoomStyle.price}>R$ {description.price}</Text>
         )}
       </View>
+       
+          {onReserve && (
+          <TouchableOpacity
+            style={{
+              marginTop: 12,
+              backgroundColor: "#1e90ff",
+              paddingVertical: 10,
+              borderRadius: 8,
+              alignItems: "center",
+          }}
+            onPress={onReserve}
+          >
+            <Text style={{ color: "#fff", fontWeight: "bold", fontSize: 16 }}>
+              Reservar
+          </Text>
+        </TouchableOpacity>
+      )}
 
     </View>
   );

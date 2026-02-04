@@ -1,9 +1,10 @@
 import { View, Text } from 'react-native';
+import Reservas from '@/components/reservation/reservas';
 
 const reservas = () =>{
   return (
     <View>
-        <Text>Aba de reservas</Text>
+        <Reservas/>
     </View>
   );
 }

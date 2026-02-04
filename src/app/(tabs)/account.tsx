@@ -1,10 +1,8 @@
-import { View, Text } from 'react-native';
+import RenderMyAccount from "@/components/change/myaccount";
 
-const account = () =>{
-    return (
-    <View>
-        <Text>Aba de conta</Text>
-    </View>
+const account = () => {
+  return (
+    <RenderMyAccount />
   );
 };
 export default account;

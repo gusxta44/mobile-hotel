@@ -80,7 +80,6 @@ const RenderLogin = () => {
                 errorText={errors.password}
                 
             />
-
         <TouchableOpacity
           style={[global.primaryButton]}
           onPress={() => router.push("/(tabs)/explorer")}
