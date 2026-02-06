@@ -1,5 +1,5 @@
-import { View, Text } from 'react-native';
 import Reservas from '@/components/reservation/reservas';
+import { View } from 'react-native';
 
 const reservas = () =>{
   return (

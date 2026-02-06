@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dimensions, Text, TouchableOpacity, View, Modal, Pressable} from "react-native";
+import { Dimensions, Text, TouchableOpacity, View, Modal, Pressable, Image} from "react-native";
 import AuthContainer from "../ui/AuthContainer";
 import DateSelector from "../ui/datePicker";
 import InputSpin from "../ui/InputSpin";
@@ -12,9 +12,10 @@ const RenderExplorer = () => {
   //useState() para gerenciar e alterar os estados
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
-  const [qntGuests, setQntGuests] = useState("");
+  const [qntGuests, setQntGuests] = useState(" ");
   const [calendar, setCalendar] = useState<"checkin" | "checkout" | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const closeCalendar = () => setCalendar(null);
 
   return (
     <AuthContainer>
@@ -27,7 +28,7 @@ const RenderExplorer = () => {
           {/*Criei esta nova View para check-in*/}
           {/* Input de checkIn para abrir calendário*/}
           <TouchableOpacity onPress={() => setCalendar("checkin")}>
-            <View style={{ width: width * 0.8 }}>
+            <View style={{ width: width * 0.8}}>
               {" "}
               {/* Nova view para dar largura ao TextField */}
               <TextField
@@ -39,15 +40,6 @@ const RenderExplorer = () => {
             </View>{" "}
             {/* Fecha aqui */}
           </TouchableOpacity>
-          {/* <DateSelector /> */}
-          {calendar === "checkin" && (
-            <DateSelector
-              onSelectDate={(date) => {
-                setCheckIn(date);
-                setCalendar(null);
-              }}
-            />
-          )}
         </View>{" "}
         {/*View de check-in fecha aqui */}
         <View style={{ display: "flex", flexDirection: "column" }}>
@@ -55,7 +47,7 @@ const RenderExplorer = () => {
           {/*Criei esta nova View para check-out*/}
           {/* Input de checkIn para abrir calendário*/}
           <TouchableOpacity onPress={() => setCalendar("checkout")}>
-            <View style={{ width: width * 0.8 }}>
+            <View style={{ width: width * 0.8}}>
               {" "}
               {/* Nova view para dar largura ao TextField */}
               <TextField
@@ -67,17 +59,53 @@ const RenderExplorer = () => {
             </View>{" "}
             {/* Fecha aqui */}
           </TouchableOpacity>
-          {/* <DateSelector /> */}
-          {calendar === "checkout" && (
-            <DateSelector
-              onSelectDate={(date) => {
-                setCheckOut(date);
-                setCalendar(null);
-              }}
-            />
-          )}
         </View>
         {/*View do check-out que fecha aqui */}
+        {/* Modal para fechar calendário ao clicar fora */}
+        <Modal
+          transparent
+          visible={calendar !== null}
+          onRequestClose={closeCalendar}
+        >
+          <Pressable
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "rgba(0,0,0, 0.29)",
+            }}
+            onPress={closeCalendar}
+          >
+             {/* Área do calendário que, ao clicar, não o fecha */}
+            <Pressable 
+              onPress={() => {}}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {/* <DateSelector /> */}
+              {calendar === "checkin" && (
+                <DateSelector
+                  onSelectDate={(date) => {
+                    setCheckIn(date);
+                    closeCalendar();
+                  }}
+                />
+              )}
+              {/* <DateSelector /> */}
+              {calendar === "checkout" && (
+                <DateSelector
+                  onSelectDate={(date) => {
+                    setCheckOut(date);
+                    closeCalendar();
+                  }}
+                />
+              )}
+            </Pressable>
+          </Pressable>
+        </Modal>
+
         {/* InputSpin */}
         <View>
           <Text style={global.label}>Quantidade de hóspedes</Text>
@@ -122,6 +150,9 @@ const RenderExplorer = () => {
             <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 12 }}>
               Confirmação de Reserva
             </Text>
+            <View style={{ width: 150, height: 100, borderRadius: 8, marginBottom: 12 }}>
+            <Image source={require("../../../assets/images/quartoruim.jpg")} style={{ width: "100%", height: "100%", borderRadius: 8 }}/>
+            </View>
             <Text>Quarto: Quarto horrivel</Text>
             <Text>Check-in: {checkIn || "Não selecionado"}</Text>
             <Text>Check-out: {checkOut || "Não selecionado"}</Text>

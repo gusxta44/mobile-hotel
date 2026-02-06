@@ -1,5 +1,5 @@
-import {Dimensions, View} from "react-native"
-import DatePicker, { getToday } from "react-native-modern-datepicker"
+import { Dimensions, View } from "react-native";
+import DatePicker, { getToday } from "react-native-modern-datepicker";
 
 type Props = {
   onSelectDate: (date: string) => void
@@ -24,14 +24,13 @@ const DateSelector = ({onSelectDate}: Props) => {
         textFontSize: 14,
         textHeaderFontSize: 15,
       }}
-      style={{ borderRadius: 15, width: width * 0.65, height: "auto", position: "absolute", zIndex: 1 }}
+      style={{ borderRadius: 15, width: width * 0.65, height: "auto", zIndex: 1}}
       isGregorian={true}
       minimumDate={today}
       onSelectedChange={(date) => {
         onSelectDate(date); 
       }}
       />
-
     </View>
   );
 };
