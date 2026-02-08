@@ -28,11 +28,7 @@ const RenderExplorer = () => {
   //useState() para gerenciar e alterar os estados
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
-<<<<<<< HEAD
   const [qntGuests, setQntGuests] = useState(1);
-=======
-  const [qntGuests, setQntGuests] = useState(" ");
->>>>>>> c6c86827f737ec821792ec645c51ea52e16986be
   const [calendar, setCalendar] = useState<"checkin" | "checkout" | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const closeCalendar = () => setCalendar(null);
@@ -48,11 +44,7 @@ const RenderExplorer = () => {
           {/*Criei esta nova View para check-in*/}
           {/* Input de checkIn para abrir calendário*/}
           <TouchableOpacity onPress={() => setCalendar("checkin")}>
-<<<<<<< HEAD
             <View style={{ width: width * 0.8, maxWidth: 400, overflow: "hidden" }}>
-=======
-            <View style={{ width: width * 0.8}}>
->>>>>>> c6c86827f737ec821792ec645c51ea52e16986be
               {" "}
               {/* Nova view para dar largura ao TextField */}
               <TextField
@@ -70,7 +62,6 @@ const RenderExplorer = () => {
           {" "}
           {/*Criei esta nova View para check-out*/}
           {/* Input de checkIn para abrir calendário*/}
-<<<<<<< HEAD
           
           <View style={{ display: "flex", flexDirection: "column" }}>
             <TouchableOpacity
@@ -94,67 +85,6 @@ const RenderExplorer = () => {
             </TouchableOpacity>
           </View>
         </View>
-=======
-          <TouchableOpacity onPress={() => setCalendar("checkout")}>
-            <View style={{ width: width * 0.8}}>
-              {" "}
-              {/* Nova view para dar largura ao TextField */}
-              <TextField
-                label="Check-out"
-                icon={{ lib: "FontAwesome5", name: "calendar-alt" }}
-                placeholder="Selecione a data"
-                value={checkOut}
-              />
-            </View>{" "}
-            {/* Fecha aqui */}
-          </TouchableOpacity>
-        </View>
-        {/*View do check-out que fecha aqui */}
-        {/* Modal para fechar calendário ao clicar fora */}
-        <Modal
-          transparent
-          visible={calendar !== null}
-          onRequestClose={closeCalendar}
-        >
-          <Pressable
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "rgba(0,0,0, 0.29)",
-            }}
-            onPress={closeCalendar}
-          >
-             {/* Área do calendário que, ao clicar, não o fecha */}
-            <Pressable 
-              onPress={() => {}}
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {/* <DateSelector /> */}
-              {calendar === "checkin" && (
-                <DateSelector
-                  onSelectDate={(date) => {
-                    setCheckIn(date);
-                    closeCalendar();
-                  }}
-                />
-              )}
-              {/* <DateSelector /> */}
-              {calendar === "checkout" && (
-                <DateSelector
-                  onSelectDate={(date) => {
-                    setCheckOut(date);
-                    closeCalendar();
-                  }}
-                />
-              )}
-            </Pressable>
-          </Pressable>
-        </Modal>
->>>>>>> c6c86827f737ec821792ec645c51ea52e16986be
 
         {/* InputSpin */}
         <View style={{ width: width * 0.8 }}>
@@ -213,7 +143,6 @@ const RenderExplorer = () => {
       </Modal>
       {/* Modal de confirmação */}
       <Modal
-<<<<<<< HEAD
   transparent
   animationType="fade"
   visible={modalVisible}
@@ -258,70 +187,6 @@ const RenderExplorer = () => {
           >
             Quarto horrível
           </Text>
-=======
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "rgba(0,0,0,0.5)"
-        }}>
-          <View style={{
-            width: width * 0.8,
-            backgroundColor: "#fff",
-            borderRadius: 10,
-            padding: 20,
-            alignItems: "center"
-          }}>
-            <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 12 }}>
-              Confirmação de Reserva
-            </Text>
-            <View style={{ width: 150, height: 100, borderRadius: 8, marginBottom: 12 }}>
-            <Image source={require("../../../assets/images/quartoruim.jpg")} style={{ width: "100%", height: "100%", borderRadius: 8 }}/>
-            </View>
-            <Text>Quarto: Quarto horrivel</Text>
-            <Text>Check-in: {checkIn || "Não selecionado"}</Text>
-            <Text>Check-out: {checkOut || "Não selecionado"}</Text>
-            <Text>Hóspedes: {qntGuests || "0"}</Text>
-            <Text>Preço: R$ 6.99</Text>
-
-            <View style={{ flexDirection: "row", marginTop: 20 }}>
-              <Pressable
-                style={{
-                  backgroundColor: "#1e90ff",
-                  padding: 10,
-                  borderRadius: 8,
-                  marginRight: 10,
-                  minWidth: 80,
-                  alignItems: "center"
-                }}
-                onPress={() => {
-                  console.log("Reserva confirmada!", { checkIn, checkOut, qntGuests });
-                  setModalVisible(false);
-                }}
-              >
-                <Text style={{ color: "#fff", fontWeight: "bold" }}>Confirmar</Text>
-              </Pressable>
-
-              <Pressable
-                style={{
-                  backgroundColor: "#ccc",
-                  padding: 10,
-                  borderRadius: 8,
-                  minWidth: 80,
-                  alignItems: "center"
-                }}
-                onPress={() => setModalVisible(false)}
-              >
-                <Text style={{ color: "#000", fontWeight: "bold" }}>Cancelar</Text>
-              </Pressable>
-            </View>
-          </View>
->>>>>>> c6c86827f737ec821792ec645c51ea52e16986be
         </View>
       </View>
 

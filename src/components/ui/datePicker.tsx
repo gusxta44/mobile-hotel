@@ -13,7 +13,6 @@ const DateSelector = ({onSelectDate, minimumDate}: Props) => {
   return (
     <View>
       <DatePicker
-<<<<<<< HEAD
         mode="calendar"
         options={{
           backgroundColor: "white",
@@ -36,26 +35,6 @@ const DateSelector = ({onSelectDate, minimumDate}: Props) => {
         onSelectedChange={(date) => {
           onSelectDate(date);
         }}
-=======
-      mode="calendar"
-      options={{
-        backgroundColor: "white",
-        textHeaderColor: "black",
-        textDefaultColor: "black",
-        selectedTextColor: "#534e4eff",
-        mainColor: "blue",
-        textSecondaryColor: "#574d4dff",
-        borderColor: "blue",
-        textFontSize: 14,
-        textHeaderFontSize: 15,
-      }}
-      style={{ borderRadius: 15, width: width * 0.65, height: "auto", zIndex: 1}}
-      isGregorian={true}
-      minimumDate={today}
-      onSelectedChange={(date) => {
-        onSelectDate(date); 
-      }}
->>>>>>> c6c86827f737ec821792ec645c51ea52e16986be
       />
     </View>
   );
