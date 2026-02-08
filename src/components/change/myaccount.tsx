@@ -111,7 +111,7 @@ const RenderMyAccount: React.FC = () => {
         .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
         .slice(0, 14);    
     }
-
+    
     return (
         <AuthContainer
         title="Minha Conta"

@@ -14,6 +14,23 @@ function isValidCPF(cpf: string) {
     return /^\d{11}$/.test(cpf);
 }
 
+const maskCpf = (value: string) => {
+    return value
+        .replace(/\D/g, '')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+        .slice(0, 14);    
+    }
+
+const maskPhone = (value: string) => {
+    return value
+        .replace(/\D/g, '')
+        .replace(/(\d{2})(\d)/, '($1) $2')
+        .replace(/(\d{5})(\d)/, '$1-$2')
+        .slice(0, 15);
+    };
+
 const RenderRegister = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -62,7 +79,7 @@ const RenderRegister = () => {
             <TextField
                 label="CPF"
                 placeholder="Digite seu CPF"
-                value={cpf}
+                value={maskCpf(cpf)}
                 onChangeText={(input) => setCpf(input)}
                 errorText={errors.cpf}
             />
@@ -70,7 +87,7 @@ const RenderRegister = () => {
             <TextField
                 label="Telefone"
                 placeholder="Digite seu telefone com DDD!"
-                value={telefone}
+                value={maskPhone(telefone)}
                 onChangeText={(input) => setTelefone(input)}
                 errorText={errors.telefone}
             />  
@@ -104,7 +121,7 @@ const RenderRegister = () => {
             <Text style={global.primaryButtonText}>Criar conta</Text>
         </TouchableOpacity>
         <View style={{alignItems: "center", marginTop: height * 0.03}}>
-            <TouchableOpacity onPress={() => router.push("/(auth)")}style={{}}>
+            <TouchableOpacity onPress={() => router.push("/(auth)/login")}style={{}}>
                 <Text style={{color: "#0a4b70ff", fontWeight: 500, fontSize: 17}}>Já possui uma conta?
                     Faça login agora!
                 </Text>

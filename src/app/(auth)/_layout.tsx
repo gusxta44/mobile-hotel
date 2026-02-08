@@ -5,7 +5,6 @@ back(): remove a tela atual e retorna à tela anterior empilhada
 replace(): subtitui a tela atual pela próxima */
 
 import { Stack } from "expo-router";
-
 const AuthLayout = () => {
     return (
         <Stack screenOptions={{headerShown: false}}>

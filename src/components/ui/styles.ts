@@ -3,7 +3,8 @@ const { width, height } = Dimensions.get("window");
 export const global = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: "#fff"
+        backgroundColor: "#fff",
+        
     },
     keyboardAvoiding: {
         flex: 1

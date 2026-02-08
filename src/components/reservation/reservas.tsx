@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
-const Reservas = () => {
+const RenderReservas = () => {
   const route = useRoute();
   const { quarto } = route.params as any; 
 
@@ -17,4 +17,4 @@ const Reservas = () => {
   );
 };
 
-export default Reservas;
+export default RenderReservas;
