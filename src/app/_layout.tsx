@@ -1,8 +1,13 @@
+// src/app/_layout.tsx
 import { Slot } from "expo-router";
+import { ReservationRoom } from "../roomReserve/QuartoReservado"; // ajuste o caminho se precisar
 
 const RootLayout = () => {
-    {/* Slot atribui ao fluxo de navegação "child" o papel de definir como as telas navegarão
-        entre si (ex.: /(auth) ou /(tabs), sem impor uma forma de navegação no nível raiz */}
-        return <Slot/>
-}
+  return (
+    <ReservationRoom>
+      <Slot />
+    </ReservationRoom>
+  );
+};
+
 export default RootLayout;

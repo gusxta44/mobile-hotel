@@ -1,13 +1,14 @@
+import { FontAwesome5 } from "@expo/vector-icons";
 import { useState } from "react";
-import { Dimensions, Text, TouchableOpacity, View, Modal, Pressable, Image} from "react-native";
+import { Dimensions, Image, Modal, Pressable, Text, TouchableOpacity, View } from "react-native";
+import { getToday } from "react-native-modern-datepicker";
+import { useReservation } from "../../roomReserve/QuartoReservado";
 import AuthContainer from "../ui/AuthContainer";
 import DateSelector from "../ui/datePicker";
 import InputSpin from "../ui/InputSpin";
 import RoomCard from "../ui/RoomCard";
 import { global } from "../ui/styles";
 import TextField from "../ui/TextField";
-import { getToday } from "react-native-modern-datepicker";
-import { FontAwesome5 } from "@expo/vector-icons";
 
 const addOneDay = (dateStr: string) => {
   const d = new Date(dateStr.replace(/\//g, "-")); 
@@ -32,6 +33,8 @@ const RenderExplorer = () => {
   const [calendar, setCalendar] = useState<"checkin" | "checkout" | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const closeCalendar = () => setCalendar(null);
+  const { setReservation } = useReservation();
+
 
   return (
     <AuthContainer>
@@ -290,11 +293,17 @@ const RenderExplorer = () => {
               alignItems: "center",
             }}
             onPress={() => {
-              console.log("Reserva confirmada", {
-                checkIn,
-                checkOut,
-                qntGuests,
-              });
+            setReservation({
+              checkIn,
+              checkOut,
+              guests: qntGuests,
+              room: {
+                title: "Quarto horrível",
+                price: 6.99,
+                beds: ["0 camas de casal", "1 cama de solteiro"],
+                image: require("../../../assets/images/quartoruim.jpg"),
+              },
+            });
               setModalVisible(false);
             }}
           >
