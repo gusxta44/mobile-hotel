@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dimensions, Text, TouchableOpacity, View, Modal, Pressable, Image} from "react-native";
+import { Dimensions, Text, TouchableOpacity, View, Modal, Pressable} from "react-native";
 import AuthContainer from "../ui/AuthContainer";
 import DateSelector from "../ui/datePicker";
 import InputSpin from "../ui/InputSpin";
@@ -28,7 +28,7 @@ const RenderExplorer = () => {
           {/*Criei esta nova View para check-in*/}
           {/* Input de checkIn para abrir calendário*/}
           <TouchableOpacity onPress={() => setCalendar("checkin")}>
-            <View style={{ width: width * 0.8}}>
+            <View style={{ width: width * 0.8 }}>
               {" "}
               {/* Nova view para dar largura ao TextField */}
               <TextField
@@ -47,7 +47,7 @@ const RenderExplorer = () => {
           {/*Criei esta nova View para check-out*/}
           {/* Input de checkIn para abrir calendário*/}
           <TouchableOpacity onPress={() => setCalendar("checkout")}>
-            <View style={{ width: width * 0.8}}>
+            <View style={{ width: width * 0.8 }}>
               {" "}
               {/* Nova view para dar largura ao TextField */}
               <TextField
@@ -151,7 +151,6 @@ const RenderExplorer = () => {
               Confirmação de Reserva
             </Text>
             <View style={{ width: 150, height: 100, borderRadius: 8, marginBottom: 12 }}>
-            <Image source={require("../../../assets/images/quartoruim.jpg")} style={{ width: "100%", height: "100%", borderRadius: 8 }}/>
             </View>
             <Text>Quarto: Quarto horrivel</Text>
             <Text>Check-in: {checkIn || "Não selecionado"}</Text>
