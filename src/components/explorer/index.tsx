@@ -6,6 +6,8 @@ import InputSpin from "../ui/InputSpin";
 import RoomCard from "../ui/RoomCard";
 import { global } from "../ui/styles";
 import TextField from "../ui/TextField";
+import { Image } from "react-native";
+import { useRouter } from "expo-router";
 
 const RenderExplorer = () => {
   const { width, height } = Dimensions.get("window");
@@ -15,6 +17,7 @@ const RenderExplorer = () => {
   const [qntGuests, setQntGuests] = useState(" ");
   const [calendar, setCalendar] = useState<"checkin" | "checkout" | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const router = useRouter();
   const closeCalendar = () => setCalendar(null);
 
   return (
@@ -148,10 +151,22 @@ const RenderExplorer = () => {
             alignItems: "center"
           }}>
             <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 12 }}>
-              Confirmação de Reserva
-            </Text>
-            <View style={{ width: 150, height: 100, borderRadius: 8, marginBottom: 12 }}>
-            </View>
+            Confirmação de Reserva
+          </Text>
+
+          <View
+            style={{
+              width: 150,
+              height: 100,
+              borderRadius: 8,
+              marginBottom: 12,
+            }}
+          >
+            <Image
+              source={require("../../../assets/images/quartoruim.jpg")}
+              style={{ width: "100%", height: "100%", borderRadius: 8 }}
+            />
+          </View>
             <Text>Quarto: Quarto horrivel</Text>
             <Text>Check-in: {checkIn || "Não selecionado"}</Text>
             <Text>Check-out: {checkOut || "Não selecionado"}</Text>
@@ -169,25 +184,34 @@ const RenderExplorer = () => {
                   alignItems: "center"
                 }}
                 onPress={() => {
-                  console.log("Reserva confirmada!", { checkIn, checkOut, qntGuests });
-                  setModalVisible(false);
-                }}
+                router.push({
+                pathname: "/(tabs)/reservations",
+                params: {
+                  label: "Quarto horrivel",
+                  text: "0 camas de casal\n1 cama de solteiro",
+                  price: 6.99,
+                  checkIn,
+                  checkOut,
+                  qntGuests
+                }
+              });
+                setModalVisible(false);
+              }}
               >
-                <Text style={{ color: "#fff", fontWeight: "bold" }}>Confirmar</Text>
-              </Pressable>
-
-              <Pressable
-                style={{
-                  backgroundColor: "#ccc",
-                  padding: 10,
-                  borderRadius: 8,
-                  minWidth: 80,
-                  alignItems: "center"
-                }}
-                onPress={() => setModalVisible(false)}
-              >
-                <Text style={{ color: "#000", fontWeight: "bold" }}>Cancelar</Text>
-              </Pressable>
+                 <Text style={{ color: "#fff", fontWeight: "bold" }}>Confirmar</Text>
+                </Pressable>
+                <Pressable
+                  style={{
+                    backgroundColor: "#ccc",
+                    padding: 10,
+                    borderRadius: 8,
+                    minWidth: 80,
+                    alignItems: "center"
+                  }}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text style={{ color: "#000", fontWeight: "bold" }}>Cancelar</Text>
+                </Pressable>
             </View>
           </View>
         </View>

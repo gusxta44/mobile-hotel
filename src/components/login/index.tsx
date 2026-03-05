@@ -30,8 +30,6 @@ const RenderLogin = () => {
         return error;
         
     }, [email, password, touched]);
-    const canSubmit = email && password && Object.keys(errors).length === 0 && !loading;
-
 
     const handleSubmit = async () => {
         try {
