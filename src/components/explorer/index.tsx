@@ -9,7 +9,6 @@ import InputSpin from "../ui/InputSpin";
 import RoomCard from "../ui/RoomCard";
 import { global } from "../ui/styles";
 import TextField from "../ui/TextField";
-import { Image } from "react-native";
 import { useRouter } from "expo-router";
 
 const addOneDay = (dateStr: string) => {
@@ -37,7 +36,8 @@ const RenderExplorer = () => {
   const closeCalendar = () => setCalendar(null);
   const { setReservation } = useReservation();
 
-
+  const router = useRouter();
+  
   return (
     <AuthContainer>
       {/*children */}
@@ -82,51 +82,6 @@ const RenderExplorer = () => {
           </TouchableOpacity>
         </View>
         {/*View do check-out que fecha aqui */}
-        {/* Modal para fechar calendário ao clicar fora */}
-        <Modal
-          transparent
-          visible={calendar !== null}
-          onRequestClose={closeCalendar}
-        >
-          <Pressable
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "rgba(0,0,0, 0.29)",
-            }}
-            onPress={closeCalendar}
-          >
-             {/* Área do calendário que, ao clicar, não o fecha */}
-            <Pressable 
-              onPress={() => {}}
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {/* <DateSelector /> */}
-              {calendar === "checkin" && (
-                <DateSelector
-                  onSelectDate={(date) => {
-                    setCheckIn(date);
-                    closeCalendar();
-                  }}
-                />
-              )}
-              {/* <DateSelector /> */}
-              {calendar === "checkout" && (
-                <DateSelector
-                  onSelectDate={(date) => {
-                    setCheckOut(date);
-                    closeCalendar();
-                  }}
-                />
-              )}
-            </Pressable>
-          </Pressable>
-        </Modal>
-
         {/* InputSpin */}
         <View style={{ width: width * 0.8 }}>
           <Text style={global.label}>Quantidade de hóspedes</Text>
@@ -184,191 +139,151 @@ const RenderExplorer = () => {
       </Modal>
       {/* Modal de confirmação */}
       <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "rgba(0,0,0,0.5)"
-        }}>
-          <View style={{
-            width: width * 0.8,
-            backgroundColor: "#fff",
-            borderRadius: 10,
-            padding: 20,
-            alignItems: "center"
-          }}>
-            <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 12 }}>
-            Confirmação de Reserva
-          </Text>
+  animationType="slide"
+  transparent
+  visible={modalVisible}
+  onRequestClose={() => setModalVisible(false)}
+>
+  <View
+    style={{
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(0,0,0,0.5)",
+      paddingHorizontal: 20,
+    }}
+  >
+    <View
+      style={{
+        width: "100%",
+        backgroundColor: "#fff",
+        borderRadius: 12,
+        padding: 20,
+      }}
+    >
+      <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 12 }}>
+        Confirmação de Reserva
+      </Text>
+
+      <Image
+        source={require("../../../assets/images/quartoruim.jpg")}
+        style={{ width: "100%", height: 180, borderRadius: 8, marginBottom: 10 }}
+      />
+
+      <View style={{ marginBottom: 16 }}>
+        <View
+          style={{
+            backgroundColor: "#f6f7fb",
+            borderRadius: 16,
+            padding: 16,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginBottom: 8,
+            }}
+          >
+            <Text style={{ color: "#555" }}>Check-in</Text>
+            <Text style={{ fontWeight: "600" }}>{checkIn}</Text>
+          </View>
 
           <View
             style={{
-              width: 150,
-              height: 100,
-              borderRadius: 8,
-              marginBottom: 12,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginBottom: 8,
             }}
           >
-            <Image
-              source={require("../../../assets/images/quartoruim.jpg")}
-              style={{ width: "100%", height: "100%", borderRadius: 8 }}
-            />
+            <Text style={{ color: "#555" }}>Check-out</Text>
+            <Text style={{ fontWeight: "600" }}>{checkOut}</Text>
           </View>
-            <Text>Quarto: Quarto horrivel</Text>
-            <Text>Check-in: {checkIn || "Não selecionado"}</Text>
-            <Text>Check-out: {checkOut || "Não selecionado"}</Text>
-            <Text>Hóspedes: {qntGuests || "0"}</Text>
-            <Text>Preço: R$ 6.99</Text>
 
-            <View style={{ flexDirection: "row", marginTop: 20 }}>
-              <Pressable
-                style={{
-                  backgroundColor: "#1e90ff",
-                  padding: 10,
-                  borderRadius: 8,
-                  marginRight: 10,
-                  minWidth: 80,
-                  alignItems: "center"
-                }}
-                onPress={() => {
-                router.push({
-                pathname: "/(tabs)/reservations",
-                params: {
-                  label: "Quarto horrivel",
-                  text: "0 camas de casal\n1 cama de solteiro",
-                  price: 6.99,
-                  checkIn,
-                  checkOut,
-                  qntGuests
-                }
-              });
-                setModalVisible(false);
-              }}
-              >
-                 <Text style={{ color: "#fff", fontWeight: "bold" }}>Confirmar</Text>
-                </Pressable>
-                <Pressable
-                  style={{
-                    backgroundColor: "#ccc",
-                    padding: 10,
-                    borderRadius: 8,
-                    minWidth: 80,
-                    alignItems: "center"
-                  }}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <Text style={{ color: "#000", fontWeight: "bold" }}>Cancelar</Text>
-                </Pressable>
-            </View>
+          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <Text style={{ color: "#555" }}>Hóspedes</Text>
+            <Text style={{ fontWeight: "600" }}>{qntGuests}</Text>
           </View>
         </View>
       </View>
 
-      {/* Corpo do modal */}
-      <View style={{ padding: 20 }}>
-        <Text style={{ fontSize: 16, color: "#333" }}>
-          Informações da sua reserva:
-        </Text>
-        <View
-      style={{
-        marginTop: 16,
-        backgroundColor: "#f6f7fb",
-        borderRadius: 16,
-        padding: 16,
-      }}
-    >
-      <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 8 }}>
-        <Text style={{ color: "#555" }}>Check-in</Text>
-        <Text style={{ fontWeight: "600" }}>
-          {checkIn}
-        </Text>
-      </View>
-
-      <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 8 }}>
-        <Text style={{ color: "#555" }}>Check-out</Text>
-        <Text style={{ fontWeight: "600" }}>
-          {checkOut}
-        </Text>
-      </View>
-
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Text style={{ color: "#555" }}>Hóspedes</Text>
-        <Text style={{ fontWeight: "600" }}>
-          {qntGuests}
-        </Text>
-      </View>
-    </View>
-
-      {/*comodidades*/}
-      <View style={{ marginTop: 16 }}>
-        <Text style={{ fontSize: 16, fontWeight: "600", marginBottom: 8 }}>
+      <View style={{ marginBottom: 16 }}>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: "600",
+            marginBottom: 8,
+          }}
+        >
           Comodidades inclusas
         </Text>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12 }}>
+
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            gap: 12,
+          }}
+        >
           {roomAmenities.map((amenity, index) => (
             <View
               key={index}
               style={{
                 flexDirection: "row",
                 alignItems: "center",
-                backgroundColor: "#f6f7fb",
+                backgroundColor: "#e6f0ff",
                 paddingHorizontal: 10,
                 paddingVertical: 6,
-                borderRadius: 12,
+                borderRadius: 16,
+                marginBottom: 8,
               }}
             >
-              <Text style={{ marginRight: 6 }}>
-                <FontAwesome5 name={amenity.icon.name} size={14} color="#064a8a" />
-              </Text>
-              <Text style={{ fontSize: 14, color: "#555" }}>{amenity.label}</Text>
+              <FontAwesome5
+                name={amenity.icon.name}
+                size={14}
+                color="#064a8a"
+                style={{ marginRight: 6 }}
+              />
+              <Text style={{ fontSize: 14, color: "#064a8a" }}>{amenity.label}</Text>
             </View>
           ))}
         </View>
       </View>
 
-
-        {/* Preço */}
-        <View
+      <View
+        style={{
+          marginBottom: 24,
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ color: "#666" }}>Valor total</Text>
+        <Text
           style={{
-            marginTop: 20,
+            fontSize: 32,
+            fontWeight: "bold",
+            color: "#1e90ff",
+          }}
+        >
+          R$ 6,99
+        </Text>
+      </View>
+
+      <View
+        style={{
+          backgroundColor: "#f6f7fb",
+          borderRadius: 16,
+          padding: 16,
+          gap: 12,
+        }}
+      >
+        <Pressable
+          style={{
+            backgroundColor: "#1e90ff",
+            paddingVertical: 16,
+            borderRadius: 16,
             alignItems: "center",
           }}
-        >
-          <Text style={{ color: "#666" }}>Valor total</Text>
-          <Text
-            style={{
-              fontSize: 32,
-              fontWeight: "bold",
-              color: "#1e90ff",
-            }}
-          >
-            R$ 6,99
-          </Text>
-        </View>
-
-        {/* Botões */}
-        <View
-          style={{
-            marginTop: 24,
-            gap: 12,
-            backgroundColor: "#f6f7fb",
-            borderRadius: 16,
-            padding: 16,
-          }}
-        >
-          <Pressable
-            style={{
-              backgroundColor: "#1e90ff",
-              paddingVertical: 16,
-              borderRadius: 16,
-              alignItems: "center",
-            }}
-            onPress={() => {
+          onPress={() => {
             setReservation({
               checkIn,
               checkOut,
@@ -380,37 +295,43 @@ const RenderExplorer = () => {
                 image: require("../../../assets/images/quartoruim.jpg"),
               },
             });
-              setModalVisible(false);
-            }}
-          >
-            <Text
-              style={{
-                color: "#fff",
-                fontSize: 16,
-                fontWeight: "bold",
-              }}
-            >
-              Confirmar reserva
-            </Text>
-          </Pressable>
-
-          <Pressable
+            router.push({
+              pathname: "/(tabs)/reservations",
+              params: {
+                label: "Quarto horrivel",
+                price: 6.99,
+                checkIn,
+                checkOut,
+                qntGuests,
+              },
+            });
+            setModalVisible(false);
+          }}
+        >
+          <Text
             style={{
-              paddingVertical: 14,
-              alignItems: "center",
+              color: "#fff",
+              fontSize: 16,
+              fontWeight: "bold",
             }}
-            onPress={() => setModalVisible(false)}
           >
-            <Text style={{ color: "#888", fontWeight: "600" }}>
-              Cancelar
-            </Text>
-          </Pressable>
-        </View>
+            Confirmar reserva
+          </Text>
+        </Pressable>
+
+        <Pressable
+          style={{
+            paddingVertical: 14,
+            alignItems: "center",
+          }}
+          onPress={() => setModalVisible(false)}
+        >
+          <Text style={{ color: "#888", fontWeight: "600" }}>Cancelar</Text>
+        </Pressable>
       </View>
     </View>
   </View>
 </Modal>
-
     </AuthContainer>
   );
 };

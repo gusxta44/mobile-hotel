@@ -103,7 +103,7 @@ const RenderRegister = () => {
             });
 
             Alert.alert("Cadastro realizado com sucesso!");
-            router.replace("/(tabs)/explorer");
+            router.replace("/(auth)/login");
 
         } catch (err: any) {
             Alert.alert("Erro", err?.message || "Falha ao tentar cadastrar!");
@@ -113,7 +113,6 @@ const RenderRegister = () => {
     };
 
     return (
-
         <AuthContainer
             title="Bem-vindo"
             subtitle="Crie sua conta!"
