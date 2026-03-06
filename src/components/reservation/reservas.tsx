@@ -32,7 +32,10 @@ const ReservationDetalhes = () => {
   return (
     <View style={[styles.card, { width: width * 0.9 }]}>
       {reservation.room?.image && (
-        <Image source={reservation.room.image} style={styles.image} resizeMode="cover" />
+        <Image
+        source={typeof reservation.room.image === "string" ? { uri: reservation.room.image } : reservation.room.image}
+        style={styles.image}
+      />
       )}
 
       <View style={styles.info}>
