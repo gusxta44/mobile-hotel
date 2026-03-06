@@ -4,6 +4,9 @@ import AuthContainer from '../ui/AuthContainer';
 import PasswordField from '../ui/PasswordField';
 import TextField from '../ui/TextField';
 import { global } from '../ui/styles';
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'expo-router';
 
     const ChangePasswordModal = ({ visible, onClose }: {
     visible: boolean;
@@ -111,12 +114,27 @@ const RenderMyAccount: React.FC = () => {
         .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
         .slice(0, 14);    
     }
-    
+        const { signOut } = useAuth();
+    const router = useRouter();
+
+    const logout = async () => {
+        await signOut();
+        router.replace("/(auth)/login");
+    };
     return (
         <AuthContainer
         title="Minha Conta"
         subtitle="Altere ou consulte seus dados cadastrais"
         >
+                    {/* HEADER */}
+        <View style={styles.headerRow}>
+            <Text style={styles.headerTitle}>Minha Conta</Text>
+
+            <TouchableOpacity style={styles.logoutButton} onPress={logout}>
+            <FontAwesome6 name="right-from-bracket" size={16} color="#DC143C" />
+            <Text style={styles.logoutText}>Sair</Text>
+            </TouchableOpacity>
+        </View>
         <View style={global.container}>
             <TextField
             label="Nome de Usuário"
@@ -201,5 +219,28 @@ export default RenderMyAccount;
         textAlign: 'center',
         color: '#141414',
         marginTop: 8,
+    },
+        headerRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: 20,
+    },
+
+    headerTitle: {
+        fontSize: 20,
+        fontWeight: "700",
+        color: "#fff",
+    },
+
+    logoutButton: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 6,
+    },
+
+    logoutText: {
+        color: "#DC143C",
+        fontWeight: "600",
     },
 });

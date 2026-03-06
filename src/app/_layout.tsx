@@ -1,12 +1,11 @@
-// src/app/_layout.tsx
-import { Slot } from "expo-router";
-import { ReservationRoom } from "../roomReserve/QuartoReservado"; // ajuste o caminho se precisar
+import AuthProvider from "@/contexts/AuthContext";
+import { Stack } from "expo-router";
 
 const RootLayout = () => {
   return (
-    <ReservationRoom>
-      <Slot />
-    </ReservationRoom>
+    <AuthProvider>
+      <Stack screenOptions={{ headerShown: false }} />
+    </AuthProvider>
   );
 };
 

@@ -9,6 +9,8 @@ import InputSpin from "../ui/InputSpin";
 import RoomCard from "../ui/RoomCard";
 import { global } from "../ui/styles";
 import TextField from "../ui/TextField";
+import { Image } from "react-native";
+import { useRouter } from "expo-router";
 
 const addOneDay = (dateStr: string) => {
   const d = new Date(dateStr.replace(/\//g, "-")); 
@@ -65,29 +67,65 @@ const RenderExplorer = () => {
           {" "}
           {/*Criei esta nova View para check-out*/}
           {/* Input de checkIn para abrir calendário*/}
-          
-          <View style={{ display: "flex", flexDirection: "column" }}>
-            <TouchableOpacity
-              onPress={() => {
-                if (!checkIn) {
-                  alert("Selecione o check-in primeiro");
-                  return;
-                }
-                setCalendar("checkout");
+          <TouchableOpacity onPress={() => setCalendar("checkout")}>
+            <View style={{ width: width * 0.8 }}>
+              {" "}
+              {/* Nova view para dar largura ao TextField */}
+              <TextField
+                label="Check-out"
+                icon={{ lib: "FontAwesome5", name: "calendar-alt" }}
+                placeholder="Selecione a data"
+                value={checkOut}
+              />
+            </View>{" "}
+            {/* Fecha aqui */}
+          </TouchableOpacity>
+        </View>
+        {/*View do check-out que fecha aqui */}
+        {/* Modal para fechar calendário ao clicar fora */}
+        <Modal
+          transparent
+          visible={calendar !== null}
+          onRequestClose={closeCalendar}
+        >
+          <Pressable
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "rgba(0,0,0, 0.29)",
+            }}
+            onPress={closeCalendar}
+          >
+             {/* Área do calendário que, ao clicar, não o fecha */}
+            <Pressable 
+              onPress={() => {}}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <View style={{ width: width * 0.8 }}>
-                <TextField
-                  label="Check-out"
-                  icon={{ lib: "FontAwesome5", name: "calendar-alt" }}
-                  placeholder="Selecione a data"
-                  value={checkOut}
-                  editable={!!checkIn}
+              {/* <DateSelector /> */}
+              {calendar === "checkin" && (
+                <DateSelector
+                  onSelectDate={(date) => {
+                    setCheckIn(date);
+                    closeCalendar();
+                  }}
                 />
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
+              )}
+              {/* <DateSelector /> */}
+              {calendar === "checkout" && (
+                <DateSelector
+                  onSelectDate={(date) => {
+                    setCheckOut(date);
+                    closeCalendar();
+                  }}
+                />
+              )}
+            </Pressable>
+          </Pressable>
+        </Modal>
 
         {/* InputSpin */}
         <View style={{ width: width * 0.8 }}>
@@ -146,50 +184,88 @@ const RenderExplorer = () => {
       </Modal>
       {/* Modal de confirmação */}
       <Modal
-  transparent
-  animationType="fade"
-  visible={modalVisible}
-  onRequestClose={() => setModalVisible(false)}
->
-  <View
-    style={{
-      flex: 1,
-      backgroundColor: "rgba(0,0,0,0.65)",
-      justifyContent: "center",
-      alignItems: "center",
-    }}
-  >
-    <View
-      style={{
-        width: width * 0.9,
-        backgroundColor: "#fff",
-        borderRadius: 24,
-        overflow: "hidden",
-        elevation: 20,
-      }}
-    >
-      {/* Header com imagem */}
-      <View>
-        <Image
-          source={require("../../../assets/images/quartoruim.jpg")}
-          style={{ width: "100%", height: 180 }}
-        />
-        <View
-          style={{
-            position: "absolute",
-            bottom: 12,
-            left: 16,
-          }}
-        >
-          <Text
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "rgba(0,0,0,0.5)"
+        }}>
+          <View style={{
+            width: width * 0.8,
+            backgroundColor: "#fff",
+            borderRadius: 10,
+            padding: 20,
+            alignItems: "center"
+          }}>
+            <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 12 }}>
+            Confirmação de Reserva
+          </Text>
+
+          <View
             style={{
-              color: "#fff",
-              fontSize: 22,
-              fontWeight: "bold",
+              width: 150,
+              height: 100,
+              borderRadius: 8,
+              marginBottom: 12,
             }}
           >
-            Quarto horrível
-          </Text>
+            <Image
+              source={require("../../../assets/images/quartoruim.jpg")}
+              style={{ width: "100%", height: "100%", borderRadius: 8 }}
+            />
+          </View>
+            <Text>Quarto: Quarto horrivel</Text>
+            <Text>Check-in: {checkIn || "Não selecionado"}</Text>
+            <Text>Check-out: {checkOut || "Não selecionado"}</Text>
+            <Text>Hóspedes: {qntGuests || "0"}</Text>
+            <Text>Preço: R$ 6.99</Text>
+
+            <View style={{ flexDirection: "row", marginTop: 20 }}>
+              <Pressable
+                style={{
+                  backgroundColor: "#1e90ff",
+                  padding: 10,
+                  borderRadius: 8,
+                  marginRight: 10,
+                  minWidth: 80,
+                  alignItems: "center"
+                }}
+                onPress={() => {
+                router.push({
+                pathname: "/(tabs)/reservations",
+                params: {
+                  label: "Quarto horrivel",
+                  text: "0 camas de casal\n1 cama de solteiro",
+                  price: 6.99,
+                  checkIn,
+                  checkOut,
+                  qntGuests
+                }
+              });
+                setModalVisible(false);
+              }}
+              >
+                 <Text style={{ color: "#fff", fontWeight: "bold" }}>Confirmar</Text>
+                </Pressable>
+                <Pressable
+                  style={{
+                    backgroundColor: "#ccc",
+                    padding: 10,
+                    borderRadius: 8,
+                    minWidth: 80,
+                    alignItems: "center"
+                  }}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text style={{ color: "#000", fontWeight: "bold" }}>Cancelar</Text>
+                </Pressable>
+            </View>
+          </View>
         </View>
       </View>
 
