@@ -90,5 +90,5 @@ export const global = StyleSheet.create({
         color: "#fff",
         fontSize: 17,
         fontWeight: 600
-    }
+    },
 })  

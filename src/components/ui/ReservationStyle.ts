@@ -84,6 +84,19 @@ export const styles = StyleSheet.create({
   deleteText: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 15,
+  },
+   confirmButton: {
+    backgroundColor: "#064a8a",
+    padding: 10,
+    borderRadius: 12,
+    paddingVertical: 12,
+    alignItems: "center",
+    marginTop: 12,
+  },
+  confirmText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 14,
   },
 });

@@ -253,7 +253,7 @@ const RenderExplorer = () => {
                     checkIn,
                     checkOut,
                     guests: qntGuests,
-                    room: { title: selectedRoom.nome, price: selectedRoom.preco, beds: ["1 cama casal"], image: selectedRoom.imagem },
+                    room: { id: selectedRoom.id, title: selectedRoom.nome, price: selectedRoom.preco, beds: ["1 cama casal"], image: selectedRoom.imagem },
                   });
                   router.push({
                     pathname: "/(tabs)/reservations",

@@ -3,6 +3,7 @@ import React from "react";
 import { Alert, Dimensions, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useReservation } from "../../roomReserve/QuartoReservado";
 import { styles } from "../ui/ReservationStyle";
+import { useAuth } from "@/contexts/AuthContext";
 
 const roomAmenities = [
   { label: "Café da manhã", icon: "coffee" },
@@ -12,11 +13,18 @@ const roomAmenities = [
   { label: "Piscina", icon: "swimming-pool" },
 ];
 
+
 const ReservationDetalhes = () => {
   const { reservation, clearReservation } = useReservation();
+  const { reservarQuarto } = useAuth();
   const { width } = Dimensions.get("window");
 
   if (!reservation) return <Text style={styles.empty}>nenhuma reserva</Text>;
+
+  const formatoBackend = (date: string) => {
+  const [dia, mes, ano] = date.split("/");
+  return `${ano}/${mes}/${dia}`;
+};
 
   const handleDelete = () => {
     Alert.alert(
@@ -29,6 +37,28 @@ const ReservationDetalhes = () => {
     );
   };
 
+  const handleConfirm = async () => {
+  try {
+    if (!reservation.room) return;
+
+    const payload = {
+      pagamento: "debido",
+      quartos: [
+        {
+          id: reservation.room.id,
+          data_inicio: formatoBackend(reservation.checkIn),
+          data_fim: formatoBackend(reservation.checkOut),
+        },
+      ],
+    };
+
+    await reservarQuarto(payload);
+    Alert.alert("Sucesso", "Reserva confirmada!");
+    clearReservation();
+  } catch (error: any) {
+    Alert.alert("Erro", error.message || "Não foi possível reservar");
+  }
+};
   return (
     <View style={[styles.card, { width: width * 0.9 }]}>
       {reservation.room?.image && (
@@ -71,6 +101,9 @@ const ReservationDetalhes = () => {
         {/* Botão de excluir */}
         <Pressable style={styles.deleteButton} onPress={handleDelete}>
           <Text style={styles.deleteText}>Excluir reserva</Text>
+        </Pressable>
+        <Pressable style={styles.confirmButton} onPress={handleConfirm}>
+          <Text style={styles.confirmText}>Confirmar reserva</Text>
         </Pressable>
       </View>
     </View>

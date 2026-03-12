@@ -17,6 +17,7 @@ type AuthContextType = {
   signUp: (data: RegisterData) => Promise<void>;                  
   signOut: () => Promise<void>;                                   
   consulta: (inicio: string, fim: string, quantidade: number) => Promise<any[]>; 
+  reservarQuarto: (reservation: any) => Promise<any>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -34,6 +35,24 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     })();
   }, []);
 
+  //reservar quarto
+  async function reservarQuarto(reservation: any) {
+    const res = await fetch(`${API_URL}/reservas`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
+      body: JSON.stringify(reservation),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.message || "Erro ao reservar");
+    }
+
+    return await res.json();
+  }
 
   //login
   async function signIn(email: string, senha: string) {
@@ -52,7 +71,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await AsyncStorage.setItem("token", tokenAPI);
     setToken(tokenAPI);
   }
-
 
   //register
   async function signUp(data: RegisterData) {
@@ -101,7 +119,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         throw new Error(responseText || `Erro ${res.status}`);
       }
     }
-
     const json = JSON.parse(responseText);
 
     const roomsArray =
@@ -133,10 +150,12 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     signUp,
     signOut,
     consulta,
+    reservarQuarto,
   }), [token, isLoading]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
 
 export const useAuth = () => {
   const ctx = useContext(AuthContext);

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 type Room = {
+  id: number;
   title: string;
   price: number;
   beds: string[];
@@ -8,6 +9,7 @@ type Room = {
 };
 
 type Reservation = {
+  id?: number;
   checkIn: string;
   checkOut: string;
   guests: number;
